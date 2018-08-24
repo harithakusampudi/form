@@ -46,6 +46,7 @@ const input = (state = initialState, action) => {
               }
             }
           }
+          return field
         }
       )
       return state.set('fields', updatedFields)

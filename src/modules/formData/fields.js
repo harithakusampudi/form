@@ -11,24 +11,24 @@ export const fields = [
       url: '/vessel',
       data: [{
         'key': 'vessel',
-        'vesselName': 'ENV1',
-        'vesselCode': 589,
+        'vessel Name': 'ENV1',
+        'vessel Code': 589,
         'vdSeries': 'VD-2018'
       }, {
         'key': 'vessel',
-        'vesselName': 'ENV2',
-        'vesselCode': 587,
+        'vessel Name': 'ENV2',
+        'vessel Code': 587,
         'vdSeries': 'VD-2018'
       }],
       store: 'vessel'
     },
     value: {
       value: '',
-      source: 'vessel.vesselName'
+      source: 'vessel.vessel Name'
     },
     display: {
       value: '',
-      source: 'vessel.vesselName'
+      source: 'vessel.vessel Name'
     }
   },
   {
@@ -39,34 +39,92 @@ export const fields = [
     fieldType: 'input',
     disable: true,
     dependency: [
+    ],
+    lookup: {
+    },
+    value: {
+      value: '',
+      source: 'vessel.vessel Code'
+    },
+    display: {
+      value: '',
+      source: 'vessel.vdSeries'
+    }
+  },
+  {
+    id: '3',
+    order: 3,
+    label: 'Vessel series',
+    keyValue: 'vdSeries',
+    fieldType: 'input',
+    disable: true,
+    dependency: [
+    ],
+    lookup: {
+    },
+    value: {
+      value: '',
+      source: 'vessel.vdSeries'
+    },
+    display: {
+      value: '',
+      source: 'vessel.vdSeries'
+    }
+  },
+  {
+    id: '4',
+    order: 4,
+    label: 'Transporter Name',
+    keyValue: 'transporter',
+    fieldType: 'lookup',
+    disable: true,
+    dependency: [
       {
         field: 'vessel',
         errorMsg: 'Please enter vessel name field'
       }
     ],
     lookup: {
+      url: '/transporter',
+      data: [{
+        'key': 'transporter',
+        'transporter Name': 'xyz',
+        'transporter Code': 589,
+        'vdSeries': 'VD-2018'
+      }, {
+        'key': 'transporter',
+        'transporter Name': 'abc',
+        'transporter Code': 587,
+        'vdSeries': 'VD-2018'
+      }],
+      store: 'transporter'
     },
     value: {
       value: '',
-      source: 'vessel.vesselCode'
+      source: 'transporter.transporter Name'
     },
     display: {
       value: '',
-      source: 'vessel.vdSeries'
+      source: 'transporter.transporter Name'
+    }
+  },
+  {
+    id: '5',
+    order: 5,
+    label: 'Transporter code',
+    keyValue: 'transporterCode',
+    fieldType: 'input',
+    disable: true,
+    dependency: [],
+    lookup: {
+    },
+    value: {
+      value: '',
+      source: 'transporter.transporter Code'
+    },
+    display: {
+      value: '',
+      source: 'transporter.transporter Code'
     }
   }
 ]
-
-const formState = {
-  vesselName: 'ENV1',
-  vesselCode: 589
-}
-
-const sourceState = {
-  vessel: {
-    'key': '1',
-    'vesselName': 'ENV1',
-    'vesselCode': 589,
-    'vdSeries': 'VD-2018'
-  }
-}

@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
-import { Table, Card, Layout, Form } from 'antd'
+import { Table, Card, Layout, Form,Button } from 'antd'
 import InputComponent from '../shared/form/InputComponent'
+import FormItem from 'antd/lib/form/FormItem';
 const { Header, Footer, Content } = Layout
-
-const columns=[{
-  title: 'Vessel Name',
-  dataIndex: 'vesselName',
-  key: 'vesselName',
-},{
-  title: 'Vessel Code',
-  dataIndex: 'vesselCode',
-  key: 'vesselCode',
-}]
 
 class FormComponent extends Component {
   constructor(props){
@@ -21,28 +12,12 @@ class FormComponent extends Component {
     }
   }
 
-  inputChanged = (key,value) =>{  
-    this.setState({[key]:value})
-  }
-componentWillReceiveProps(nextProps){
-  if(nextProps.fields){
-    this.setState({fields:nextProps.fields})
-  }
-}
-  onClickLookup=(value)=>{
-    const fieldData=this.props.fields.find(key=>{
-       return key.keyValue==value
-    })
-    const {data}=fieldData.lookup
-    this.setState({lookupData:data})
-  }
-  onRow =(record,keyValue) =>({
-    onClick:(e)=>{
-      this.props.actions.getFieldValue(record)
-      this.props.actions.enableInput(true)
-      this.setState({lookupData:null})
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.fields){
+      this.setState({fields:nextProps.fields})
     }
-  })
+  }
 
   renderFormField(fieldDetails){
     switch(fieldDetails.fieldType){
@@ -83,6 +58,9 @@ componentWillReceiveProps(nextProps){
                   this.renderFormField(eachField)
                 ))
                  }
+                <FormItem>  
+                  <Button type="primary" htmlType="submit">Submit</Button>
+                </FormItem>
               </Form>
             </Card>
           </Content>
@@ -90,7 +68,7 @@ componentWillReceiveProps(nextProps){
           {this.state.lookupData &&
             <Table
             onRow = {this.onRow}
-            columns={columns}
+            columns={this.state.columns}
             dataSource={this.state.lookupData}
             />
           }
@@ -100,6 +78,59 @@ componentWillReceiveProps(nextProps){
 
     )
   }
+  inputChanged = (key,value) =>{  
+    this.setState({[key]:value})
+  }
+
+  onClickLookup=(value)=>{
+    const fieldData=this.props.fields.find(key=>{
+      if(key.keyValue==value){
+          // var fields=key.dependency.map(el=>el.field )
+          // console.log("keyee",fields);
+          // for(var i=0;i<fields.length;i++){
+          //   var fieldValue=fields[i]
+          //     if(key.keyValue===fieldValue &&  key.disable===true){
+          //     alert(`select ${fieldValue}`)
+          //   }else return key.keyValue==value
+          return key.keyValue==value
+
+          }
+    })
+    const {data}=fieldData.lookup
+    this.setState({lookupData:data})
+    var object=Object.keys(data[0])
+    this.columns(object)
+  }
+
+  columns=(object)=>{
+    object.shift()
+    var columns=[]
+    for(var i=0;i<object.length;i++){
+    var newColumn={
+      title:object[i].toUpperCase(),
+      dataIndex:object[i]
+    }
+    columns.push(newColumn)
+  }
+  this.setState({columns:columns})
+  }
+
+  onRow =(record,keyValue) =>({
+    onClick:(e)=>{
+      this.props.actions.getFieldValue(record)
+      this.props.actions.enableInput(true)
+      this.setState({lookupData:null})
+    }
+  })
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+        if (!err) {
+            console.log('Received values of form: ', values);
+        }
+    });
 }
 
-export default FormComponent
+}
+
+export default  Form.create()(FormComponent)
