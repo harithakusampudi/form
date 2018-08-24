@@ -1,0 +1,44 @@
+[    {
+    "name":"vesselName",
+    "label":"vesselName",
+    "type":"input",
+    "value":{
+        "display":"",
+        "server":""
+    },
+    "disabled":"true",
+    "push":"true",
+    "lookup":[{
+        "key":"1",
+        "vesselName":"ENV1",
+        "vesselCode":589,
+        "vdSeries": "VD-2018"
+    },{
+        "key":"1",
+        "vesselName":"ENV2",
+        "vesselCode":589,
+        "vdSeries": "VD-2018"
+    }]
+    },
+    {
+        "name":"Transporter Name",
+        "label":"Transporter Name",
+        "type":"input",
+        "value":{
+            "display":"",
+            "server":""
+        },
+        "disabled":"true",
+        "push":"true",
+        "lookup":[{
+            "key":"1",
+            "name":"567",
+            "code":"ABCDEF"  
+        },
+        {
+            "key":"2",
+            "name":"467",
+            "code":"XYZ"  
+       }]
+    }
+]
